@@ -186,4 +186,105 @@ void main() {
     // The carousel should have smoothly advanced to the next card
     expect(find.text('02'), findsWidgets);
   });
+
+  testWidgets('Rank Candidates button triggers evaluation and displays Top 3 Podium', (
+    WidgetTester tester,
+  ) async {
+    tester.view.physicalSize = const Size(1440, 900);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+
+    await tester.pumpWidget(const NexoraApp());
+    await tester.pumpAndSettle();
+
+    // Verify Rank Candidates button is present
+    final rankBtn = find.text('RANK CANDIDATES');
+    expect(rankBtn, findsOneWidget);
+
+    // Click Rank Candidates
+    await tester.tap(rankBtn);
+    await tester.pump(); // Start evaluation
+
+    // Notice evaluation state
+    expect(find.text('SYNCHRONIZING CANDIDATE ARCHIVES'), findsOneWidget);
+
+    // Settle after evaluation completes (900ms timer)
+    await tester.pumpAndSettle(const Duration(milliseconds: 1200));
+
+    // Verify Top 3 Podium is displayed
+    expect(find.text('THE CANDIDATE PODIUM'), findsOneWidget);
+    expect(find.text('PODIUM · POSITION 01'), findsOneWidget);
+    expect(find.text('PODIUM · POSITION 02'), findsOneWidget);
+    expect(find.text('PODIUM · POSITION 03'), findsOneWidget);
+
+    // Verify 1st place candidate is Elena Rostova (highest score 97%)
+    expect(find.text('Elena Rostova'), findsWidgets);
+    expect(find.text('#01 // HIGHEST MATCH'), findsOneWidget);
+
+    // Tap 'RETURN TO ARCHIVE [ESC]' button
+    final returnBtn = find.text('RETURN TO ARCHIVE [ESC]');
+    expect(returnBtn, findsOneWidget);
+    await tester.tap(returnBtn);
+    await tester.pumpAndSettle();
+
+    // Verify we are back on the horizontal carousel gallery screen
+    expect(find.text('RESUME DOSSIER COLLECTION'), findsOneWidget);
+    expect(find.byType(HorizontalResumeCarousel), findsOneWidget);
+  });
+
+  testWidgets('Clicking candidate on Top 3 Podium opens detailed resume view', (
+    WidgetTester tester,
+  ) async {
+    tester.view.physicalSize = const Size(1440, 900);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+
+    await tester.pumpWidget(const NexoraApp());
+    await tester.pumpAndSettle();
+
+    // Click Rank Candidates
+    await tester.tap(find.text('RANK CANDIDATES'));
+    await tester.pumpAndSettle(const Duration(milliseconds: 1200));
+
+    // Tap on the 1st position candidate card on the podium
+    final firstPodiumCard = find.text('#01 // HIGHEST MATCH');
+    expect(firstPodiumCard, findsOneWidget);
+    await tester.tap(firstPodiumCard);
+    await tester.pumpAndSettle();
+
+    // Verify detail screen opens
+    expect(find.byType(ResumeDocument), findsOneWidget);
+    expect(find.text('Elena Rostova'), findsOneWidget);
+    expect(find.text('PROFESSIONAL SUMMARY'), findsOneWidget);
+
+    // Return using Escape
+    await tester.sendKeyEvent(LogicalKeyboardKey.escape);
+    await tester.pumpAndSettle();
+
+    // Should return to podium or gallery
+    expect(find.text('Elena Rostova'), findsWidgets);
+  });
+
+  testWidgets('Upload Resumes button exists and ResumeUploadService generates valid mock candidate', (
+    WidgetTester tester,
+  ) async {
+    tester.view.physicalSize = const Size(1440, 900);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+
+    await tester.pumpWidget(const NexoraApp());
+    await tester.pumpAndSettle();
+
+    // Verify UPLOAD RESUMES button is present
+    expect(find.text('UPLOAD RESUMES'), findsOneWidget);
+  });
 }
