@@ -279,7 +279,9 @@ def rank_candidates(
     
     100% offline, deterministic, and auditable.
     """
-    jd_dict = jd if isinstance(jd, dict) else jd.model_dump()
+    from nexora.ranking.input_adapter import normalize_ranking_inputs
+    jd, candidates = normalize_ranking_inputs(jd, candidates)
+    jd_dict = jd
     requirements = jd_dict.get("requirements", [])
     if not requirements:
         raise ValueError("No JD requirements were extracted. Check the uploaded JD and parser.")

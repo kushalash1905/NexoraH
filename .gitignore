@@ -13,3 +13,7 @@ __pycache__/
 
 # Streamlit
 .streamlit/
+
+.DS_Store
+models/
+nexora-code*.zip*
