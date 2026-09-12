@@ -1,8 +1,23 @@
-__pycache__/
-*.py[cod]
+# Virtual environment
 .venv/
 venv/
+ENV/
 .env
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Pytest cache
 .pytest_cache/
+
+# Debug and data
 debug/
 data/resumes/
+models/
+
+# Streamlit & OS
+.streamlit/
+.DS_Store
+nexora-code*.zip*

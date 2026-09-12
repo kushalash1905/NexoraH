@@ -1,0 +1,398 @@
+{
+  "categories": {
+    "languages": {
+      "name": "Programming Languages",
+      "skills": [
+        "Python",
+        "JavaScript",
+        "TypeScript",
+        "Go",
+        "Java",
+        "C++",
+        "C#",
+        "Rust",
+        "Ruby",
+        "PHP",
+        "Kotlin",
+        "Swift",
+        "Dart",
+        "SQL",
+        "Bash",
+        "HTML",
+        "CSS",
+        "Scala",
+        "R"
+      ]
+    },
+    "frameworks": {
+      "name": "Web & Backend Frameworks",
+      "skills": [
+        "React",
+        "Angular",
+        "Vue.js",
+        "Next.js",
+        "Node.js",
+        "Express.js",
+        "FastAPI",
+        "Flask",
+        "Django",
+        "Django REST Framework",
+        "Spring Boot",
+        ".NET",
+        ".NET Core",
+        "ASP.NET",
+        "ASP.NET Core",
+        "React Native",
+        "Tailwind CSS",
+        "Bootstrap"
+      ]
+    },
+    "databases": {
+      "name": "Databases & Storage",
+      "skills": [
+        "PostgreSQL",
+        "MySQL",
+        "MongoDB",
+        "Redis",
+        "SQLite",
+        "Cassandra",
+        "Elasticsearch",
+        "DynamoDB",
+        "Snowflake",
+        "BigQuery",
+        "Oracle DB",
+        "MariaDB",
+        "Neo4j"
+      ]
+    },
+    "cloud_devops": {
+      "name": "Cloud, DevOps & Infrastructure",
+      "skills": [
+        "AWS",
+        "GCP",
+        "Azure",
+        "Docker",
+        "Kubernetes",
+        "Terraform",
+        "Ansible",
+        "CI/CD",
+        "Jenkins",
+        "GitHub Actions",
+        "GitLab CI",
+        "Git",
+        "Linux",
+        "NGINX",
+        "Apache",
+        "Apache Kafka",
+        "RabbitMQ",
+        "Celery",
+        "Apache Airflow",
+        "Helm",
+        "Prometheus",
+        "Grafana"
+      ]
+    },
+    "ai_ml": {
+      "name": "Artificial Intelligence & Machine Learning",
+      "skills": [
+        "Machine Learning",
+        "Deep Learning",
+        "Artificial Intelligence",
+        "Natural Language Processing",
+        "Computer Vision",
+        "Large Language Models",
+        "Generative AI",
+        "PyTorch",
+        "TensorFlow",
+        "scikit-learn",
+        "Pandas",
+        "NumPy",
+        "SciPy",
+        "Keras",
+        "OpenCV",
+        "Hugging Face",
+        "Transformers",
+        "LangChain",
+        "LlamaIndex",
+        "RAG",
+        "Model Fine-Tuning",
+        "Prompt Engineering"
+      ]
+    },
+    "architecture_api": {
+      "name": "Architecture & Protocols",
+      "skills": [
+        "REST API",
+        "GraphQL",
+        "gRPC",
+        "Microservices",
+        "Distributed Systems",
+        "System Design"
+      ]
+    },
+    "methodologies": {
+      "name": "Methodologies & Testing",
+      "skills": [
+        "Unit Testing",
+        "Pytest",
+        "Jest",
+        "JUnit",
+        "TDD",
+        "Agile",
+        "Scrum",
+        "Kanban",
+        "Code Review"
+      ]
+    }
+  },
+  "relations": {
+    "FastAPI": {
+      "category": "frameworks",
+      "parent": "Python",
+      "related": [
+        "Python",
+        "REST API",
+        "Pydantic",
+        "Flask",
+        "Django",
+        "Docker",
+        "Uvicorn"
+      ]
+    },
+    "Flask": {
+      "category": "frameworks",
+      "parent": "Python",
+      "related": [
+        "Python",
+        "REST API",
+        "FastAPI",
+        "Django"
+      ]
+    },
+    "Django": {
+      "category": "frameworks",
+      "parent": "Python",
+      "related": [
+        "Python",
+        "Django REST Framework",
+        "PostgreSQL",
+        "REST API"
+      ]
+    },
+    "React": {
+      "category": "frameworks",
+      "parent": "JavaScript",
+      "related": [
+        "JavaScript",
+        "TypeScript",
+        "Next.js",
+        "HTML",
+        "CSS",
+        "Tailwind CSS",
+        "Redux"
+      ]
+    },
+    "Next.js": {
+      "category": "frameworks",
+      "parent": "React",
+      "related": [
+        "React",
+        "TypeScript",
+        "JavaScript",
+        "Node.js"
+      ]
+    },
+    "Node.js": {
+      "category": "frameworks",
+      "parent": "JavaScript",
+      "related": [
+        "JavaScript",
+        "TypeScript",
+        "Express.js",
+        "REST API",
+        "npm"
+      ]
+    },
+    "Kubernetes": {
+      "category": "cloud_devops",
+      "parent": "Docker",
+      "related": [
+        "Docker",
+        "Helm",
+        "AWS",
+        "GCP",
+        "CI/CD",
+        "Linux"
+      ]
+    },
+    "Docker": {
+      "category": "cloud_devops",
+      "parent": null,
+      "related": [
+        "Kubernetes",
+        "Linux",
+        "CI/CD",
+        "AWS",
+        "GCP"
+      ]
+    },
+    "PyTorch": {
+      "category": "ai_ml",
+      "parent": "Deep Learning",
+      "related": [
+        "Python",
+        "Machine Learning",
+        "Deep Learning",
+        "TensorFlow",
+        "Hugging Face",
+        "CUDA"
+      ]
+    },
+    "TensorFlow": {
+      "category": "ai_ml",
+      "parent": "Deep Learning",
+      "related": [
+        "Python",
+        "Machine Learning",
+        "Deep Learning",
+        "Keras",
+        "PyTorch"
+      ]
+    },
+    "LangChain": {
+      "category": "ai_ml",
+      "parent": "Large Language Models",
+      "related": [
+        "Large Language Models",
+        "Python",
+        "RAG",
+        "Prompt Engineering",
+        "LlamaIndex"
+      ]
+    },
+    "RAG": {
+      "category": "ai_ml",
+      "parent": "Large Language Models",
+      "related": [
+        "Large Language Models",
+        "LangChain",
+        "Vector Databases",
+        "Embeddings",
+        "Elasticsearch"
+      ]
+    },
+    "PostgreSQL": {
+      "category": "databases",
+      "parent": "SQL",
+      "related": [
+        "SQL",
+        "Databases",
+        "Python",
+        "Backend",
+        "Redis"
+      ]
+    }
+  },
+  "node.js": {
+    "aliases": [
+      "node",
+      "nodejs",
+      "node.js",
+      "node js"
+    ],
+    "related": {
+      "express": 0.75,
+      "rest api": 0.55,
+      "javascript": 0.3
+    }
+  },
+  "react": {
+    "aliases": [
+      "react",
+      "reactjs",
+      "react.js",
+      "react js"
+    ],
+    "related": {
+      "frontend development": 0.7,
+      "javascript": 0.3
+    }
+  },
+  "mongodb": {
+    "aliases": [
+      "mongodb",
+      "mongo",
+      "mongo db"
+    ],
+    "related": {
+      "database development": 0.6
+    }
+  },
+  "express": {
+    "aliases": [
+      "express",
+      "express.js",
+      "expressjs"
+    ],
+    "related": {
+      "node.js": 0.75,
+      "rest api": 0.65,
+      "backend development": 0.7
+    }
+  },
+  "rest api": {
+    "aliases": [
+      "rest api",
+      "rest apis",
+      "restful api",
+      "restful services",
+      "rest services"
+    ],
+    "related": {
+      "backend development": 0.7
+    }
+  },
+  "docker": {
+    "aliases": [
+      "docker",
+      "dockerized",
+      "containerized"
+    ],
+    "related": {
+      "containerization": 0.8,
+      "devops": 0.6
+    }
+  },
+  "aws": {
+    "aliases": [
+      "aws",
+      "amazon web services"
+    ],
+    "related": {
+      "cloud computing": 0.8,
+      "devops": 0.6
+    }
+  },
+  "typescript": {
+    "aliases": [
+      "typescript",
+      "ts"
+    ],
+    "related": {
+      "javascript": 0.7,
+      "frontend development": 0.5
+    }
+  },
+  "postgresql": {
+    "aliases": [
+      "postgresql",
+      "postgres",
+      "postgre sql"
+    ],
+    "related": {
+      "sql": 0.8,
+      "relational database": 0.8,
+      "database development": 0.6
+    }
+  }
+}

@@ -1,0 +1,734 @@
+{
+  "aliases": {
+    "pyhton": "Python",
+    "python3": "Python",
+    "python 3": "Python",
+    "python": "Python",
+    "py": "Python",
+    "js": "JavaScript",
+    "javascrip": "JavaScript",
+    "java script": "JavaScript",
+    "javascript": "JavaScript",
+    "ecmascript": "JavaScript",
+    "es6": "JavaScript",
+    "ts": "TypeScript",
+    "typescipt": "TypeScript",
+    "type script": "TypeScript",
+    "typescript": "TypeScript",
+    "golang": "Go",
+    "go lang": "Go",
+    "go": "Go",
+    "c++": "C++",
+    "cpp": "C++",
+    "c plus plus": "C++",
+    "c#": "C#",
+    "csharp": "C#",
+    "c sharp": "C#",
+    "java": "Java",
+    "core java": "Java",
+    "java 8": "Java",
+    "java 11": "Java",
+    "java 17": "Java",
+    "rust": "Rust",
+    "rustlang": "Rust",
+    "ruby": "Ruby",
+    "ruby on rails": "Ruby on Rails",
+    "ror": "Ruby on Rails",
+    "php": "PHP",
+    "php7": "PHP",
+    "php8": "PHP",
+    "kotlin": "Kotlin",
+    "swift": "Swift",
+    "dart": "Dart",
+    "scala": "Scala",
+    "r": "R",
+    "sql": "SQL",
+    "structured query language": "SQL",
+    "bash": "Bash",
+    "shell": "Bash",
+    "sh": "Bash",
+    "zsh": "Bash",
+    "bash scripting": "Bash",
+    "html": "HTML",
+    "html5": "HTML",
+    "css": "CSS",
+    "css3": "CSS",
+    "sass": "Sass",
+    "scss": "Sass",
+    "tailwind": "Tailwind CSS",
+    "tailwindcss": "Tailwind CSS",
+    "bootstrap": "Bootstrap",
+    "react": "React",
+    "react.js": "React",
+    "reactjs": "React",
+    "react js": "React",
+    "react native": "React Native",
+    "react-native": "React Native",
+    "angular": "Angular",
+    "angularjs": "Angular",
+    "angular.js": "Angular",
+    "angular 2+": "Angular",
+    "vue": "Vue.js",
+    "vue.js": "Vue.js",
+    "vuejs": "Vue.js",
+    "next": "Next.js",
+    "nextjs": "Next.js",
+    "next.js": "Next.js",
+    "nuxt": "Nuxt.js",
+    "nuxtjs": "Nuxt.js",
+    "svelte": "Svelte",
+    "node": "Node.js",
+    "nodejs": "Node.js",
+    "node.js": "Node.js",
+    "express": "Express.js",
+    "expressjs": "Express.js",
+    "express.js": "Express.js",
+    "fastapi": "FastAPI",
+    "fast-api": "FastAPI",
+    "fast api": "FastAPI",
+    "flask": "Flask",
+    "django": "Django",
+    "django rest framework": "Django REST Framework",
+    "drf": "Django REST Framework",
+    "spring": "Spring Boot",
+    "spring boot": "Spring Boot",
+    "springboot": "Spring Boot",
+    "spring framework": "Spring Boot",
+    ".net": ".NET",
+    "dotnet": ".NET",
+    ".net core": ".NET Core",
+    "asp.net": "ASP.NET",
+    "asp.net core": "ASP.NET Core",
+    "postgresql": "PostgreSQL",
+    "postgres": "PostgreSQL",
+    "posgresql": "PostgreSQL",
+    "psql": "PostgreSQL",
+    "mysql": "MySQL",
+    "my sql": "MySQL",
+    "mongodb": "MongoDB",
+    "mongdb": "MongoDB",
+    "mongo": "MongoDB",
+    "mongo db": "MongoDB",
+    "redis": "Redis",
+    "redis cache": "Redis",
+    "sqlite": "SQLite",
+    "sqlite3": "SQLite",
+    "cassandra": "Cassandra",
+    "apache cassandra": "Cassandra",
+    "elasticsearch": "Elasticsearch",
+    "elastic search": "Elasticsearch",
+    "es": "Elasticsearch",
+    "dynamodb": "DynamoDB",
+    "dynamo db": "DynamoDB",
+    "aws dynamodb": "DynamoDB",
+    "snowflake": "Snowflake",
+    "bigquery": "BigQuery",
+    "google bigquery": "BigQuery",
+    "bq": "BigQuery",
+    "oracle": "Oracle DB",
+    "oracle db": "Oracle DB",
+    "mariadb": "MariaDB",
+    "couchdb": "CouchDB",
+    "neo4j": "Neo4j",
+    "aws": "AWS",
+    "amazon web services": "AWS",
+    "amazon aws": "AWS",
+    "gcp": "GCP",
+    "google cloud": "GCP",
+    "google cloud platform": "GCP",
+    "azure": "Azure",
+    "microsoft azure": "Azure",
+    "docker": "Docker",
+    "docer": "Docker",
+    "dockerfile": "Docker",
+    "docker container": "Docker",
+    "containerization": "Docker",
+    "kubernetes": "Kubernetes",
+    "k8s": "Kubernetes",
+    "kubernets": "Kubernetes",
+    "kube": "Kubernetes",
+    "terraform": "Terraform",
+    "tf": "Terraform",
+    "ansible": "Ansible",
+    "ci/cd": "CI/CD",
+    "cicd": "CI/CD",
+    "ci cd": "CI/CD",
+    "continuous integration": "CI/CD",
+    "continuous deployment": "CI/CD",
+    "jenkins": "Jenkins",
+    "github actions": "GitHub Actions",
+    "gh actions": "GitHub Actions",
+    "gha": "GitHub Actions",
+    "gitlab ci": "GitLab CI",
+    "gitlab ci/cd": "GitLab CI",
+    "git": "Git",
+    "github": "Git",
+    "gitlab": "Git",
+    "version control": "Git",
+    "linux": "Linux",
+    "unix": "Linux",
+    "ubuntu": "Linux",
+    "debian": "Linux",
+    "centos": "Linux",
+    "nginx": "NGINX",
+    "ngnix": "NGINX",
+    "apache": "Apache",
+    "kafka": "Apache Kafka",
+    "apache kafka": "Apache Kafka",
+    "rabbitmq": "RabbitMQ",
+    "celery": "Celery",
+    "airflow": "Apache Airflow",
+    "apache airflow": "Apache Airflow",
+    "helm": "Helm",
+    "prometheus": "Prometheus",
+    "grafana": "Grafana",
+    "machine learning": "Machine Learning",
+    "ml": "Machine Learning",
+    "deep learning": "Deep Learning",
+    "dl": "Deep Learning",
+    "artificial intelligence": "Artificial Intelligence",
+    "ai": "Artificial Intelligence",
+    "natural language processing": "Natural Language Processing",
+    "nlp": "Natural Language Processing",
+    "computer vision": "Computer Vision",
+    "cv": "Computer Vision",
+    "large language models": "Large Language Models",
+    "large language model": "Large Language Models",
+    "llm": "Large Language Models",
+    "llms": "Large Language Models",
+    "generative ai": "Generative AI",
+    "genai": "Generative AI",
+    "gen ai": "Generative AI",
+    "pytorch": "PyTorch",
+    "torch": "PyTorch",
+    "tensorflow": "TensorFlow",
+    "tensrflow": "TensorFlow",
+    "scikit-learn": "scikit-learn",
+    "scikit learn": "scikit-learn",
+    "sklearn": "scikit-learn",
+    "pandas": "Pandas",
+    "numpy": "NumPy",
+    "scipy": "SciPy",
+    "keras": "Keras",
+    "opencv": "OpenCV",
+    "cv2": "OpenCV",
+    "huggingface": "Hugging Face",
+    "hugging face": "Hugging Face",
+    "transformers": "Transformers",
+    "langchain": "LangChain",
+    "lang chain": "LangChain",
+    "llamaindex": "LlamaIndex",
+    "llama index": "LlamaIndex",
+    "rag": "RAG",
+    "retrieval augmented generation": "RAG",
+    "fine-tuning": "Model Fine-Tuning",
+    "finetuning": "Model Fine-Tuning",
+    "prompt engineering": "Prompt Engineering",
+    "rest": "REST API",
+    "rest api": "REST API",
+    "restful": "REST API",
+    "restful api": "REST API",
+    "rest apis": "REST API",
+    "graphql": "GraphQL",
+    "graph ql": "GraphQL",
+    "grpc": "gRPC",
+    "microservices": "Microservices",
+    "microservice": "Microservices",
+    "microservice architecture": "Microservices",
+    "distributed systems": "Distributed Systems",
+    "system design": "System Design",
+    "unit testing": "Unit Testing",
+    "unit test": "Unit Testing",
+    "pytest": "Pytest",
+    "jest": "Jest",
+    "junit": "JUnit",
+    "tdd": "TDD",
+    "test driven development": "TDD",
+    "agile": "Agile",
+    "scrum": "Scrum",
+    "kanban": "Kanban",
+    "code review": "Code Review"
+  },
+  "react": [
+    "react",
+    "reactjs",
+    "react.js",
+    "react js"
+  ],
+  "node.js": [
+    "node",
+    "nodejs",
+    "node.js",
+    "node js"
+  ],
+  "mongodb": [
+    "mongodb",
+    "mongo",
+    "mongo db",
+    "mongdb"
+  ],
+  "rest api": [
+    "rest api",
+    "rest apis",
+    "restful api",
+    "restful services",
+    "rest services",
+    "rest",
+    "restful"
+  ],
+  "javascript": [
+    "javascript",
+    "js",
+    "ecmascript",
+    "javascrip",
+    "java script",
+    "es6"
+  ],
+  "typescript": [
+    "typescript",
+    "ts",
+    "typescipt",
+    "type script"
+  ],
+  "postgresql": [
+    "postgresql",
+    "postgres",
+    "postgre sql",
+    "posgresql",
+    "psql"
+  ],
+  "express": [
+    "express",
+    "express.js",
+    "expressjs"
+  ],
+  "docker": [
+    "docker",
+    "dockerized",
+    "containerized",
+    "docer",
+    "dockerfile",
+    "docker container",
+    "containerization"
+  ],
+  "aws": [
+    "aws",
+    "amazon web services",
+    "amazon aws"
+  ],
+  "python": [
+    "python",
+    "py",
+    "python3",
+    "pyhton",
+    "python 3"
+  ],
+  "go": [
+    "golang",
+    "go lang",
+    "go"
+  ],
+  "c++": [
+    "c++",
+    "cpp",
+    "c plus plus"
+  ],
+  "c#": [
+    "c#",
+    "csharp",
+    "c sharp"
+  ],
+  "java": [
+    "java",
+    "core java",
+    "java 8",
+    "java 11",
+    "java 17"
+  ],
+  "rust": [
+    "rust",
+    "rustlang"
+  ],
+  "ruby": [
+    "ruby"
+  ],
+  "ruby on rails": [
+    "ruby on rails",
+    "ror"
+  ],
+  "php": [
+    "php",
+    "php7",
+    "php8"
+  ],
+  "kotlin": [
+    "kotlin"
+  ],
+  "swift": [
+    "swift"
+  ],
+  "dart": [
+    "dart"
+  ],
+  "scala": [
+    "scala"
+  ],
+  "r": [
+    "r"
+  ],
+  "sql": [
+    "sql",
+    "structured query language"
+  ],
+  "bash": [
+    "bash",
+    "shell",
+    "sh",
+    "zsh",
+    "bash scripting"
+  ],
+  "html": [
+    "html",
+    "html5"
+  ],
+  "css": [
+    "css",
+    "css3"
+  ],
+  "sass": [
+    "sass",
+    "scss"
+  ],
+  "tailwind css": [
+    "tailwind",
+    "tailwindcss"
+  ],
+  "bootstrap": [
+    "bootstrap"
+  ],
+  "react native": [
+    "react native",
+    "react-native"
+  ],
+  "angular": [
+    "angular",
+    "angularjs",
+    "angular.js",
+    "angular 2+"
+  ],
+  "vue.js": [
+    "vue",
+    "vue.js",
+    "vuejs"
+  ],
+  "next.js": [
+    "next",
+    "nextjs",
+    "next.js"
+  ],
+  "nuxt.js": [
+    "nuxt",
+    "nuxtjs"
+  ],
+  "svelte": [
+    "svelte"
+  ],
+  "fastapi": [
+    "fastapi",
+    "fast-api",
+    "fast api"
+  ],
+  "flask": [
+    "flask"
+  ],
+  "django": [
+    "django"
+  ],
+  "django rest framework": [
+    "django rest framework",
+    "drf"
+  ],
+  "spring boot": [
+    "spring",
+    "spring boot",
+    "springboot",
+    "spring framework"
+  ],
+  ".net": [
+    ".net",
+    "dotnet"
+  ],
+  ".net core": [
+    ".net core"
+  ],
+  "asp.net": [
+    "asp.net"
+  ],
+  "asp.net core": [
+    "asp.net core"
+  ],
+  "mysql": [
+    "mysql",
+    "my sql"
+  ],
+  "redis": [
+    "redis",
+    "redis cache"
+  ],
+  "sqlite": [
+    "sqlite",
+    "sqlite3"
+  ],
+  "cassandra": [
+    "cassandra",
+    "apache cassandra"
+  ],
+  "elasticsearch": [
+    "elasticsearch",
+    "elastic search",
+    "es"
+  ],
+  "dynamodb": [
+    "dynamodb",
+    "dynamo db",
+    "aws dynamodb"
+  ],
+  "snowflake": [
+    "snowflake"
+  ],
+  "bigquery": [
+    "bigquery",
+    "google bigquery",
+    "bq"
+  ],
+  "oracle db": [
+    "oracle",
+    "oracle db"
+  ],
+  "mariadb": [
+    "mariadb"
+  ],
+  "couchdb": [
+    "couchdb"
+  ],
+  "neo4j": [
+    "neo4j"
+  ],
+  "gcp": [
+    "gcp",
+    "google cloud",
+    "google cloud platform"
+  ],
+  "azure": [
+    "azure",
+    "microsoft azure"
+  ],
+  "kubernetes": [
+    "kubernetes",
+    "k8s",
+    "kubernets",
+    "kube"
+  ],
+  "terraform": [
+    "terraform",
+    "tf"
+  ],
+  "ansible": [
+    "ansible"
+  ],
+  "ci/cd": [
+    "ci/cd",
+    "cicd",
+    "ci cd",
+    "continuous integration",
+    "continuous deployment"
+  ],
+  "jenkins": [
+    "jenkins"
+  ],
+  "github actions": [
+    "github actions",
+    "gh actions",
+    "gha"
+  ],
+  "gitlab ci": [
+    "gitlab ci",
+    "gitlab ci/cd"
+  ],
+  "git": [
+    "git",
+    "github",
+    "gitlab",
+    "version control"
+  ],
+  "linux": [
+    "linux",
+    "unix",
+    "ubuntu",
+    "debian",
+    "centos"
+  ],
+  "nginx": [
+    "nginx",
+    "ngnix"
+  ],
+  "apache": [
+    "apache"
+  ],
+  "apache kafka": [
+    "kafka",
+    "apache kafka"
+  ],
+  "rabbitmq": [
+    "rabbitmq"
+  ],
+  "celery": [
+    "celery"
+  ],
+  "apache airflow": [
+    "airflow",
+    "apache airflow"
+  ],
+  "helm": [
+    "helm"
+  ],
+  "prometheus": [
+    "prometheus"
+  ],
+  "grafana": [
+    "grafana"
+  ],
+  "machine learning": [
+    "machine learning",
+    "ml"
+  ],
+  "deep learning": [
+    "deep learning",
+    "dl"
+  ],
+  "artificial intelligence": [
+    "artificial intelligence",
+    "ai"
+  ],
+  "natural language processing": [
+    "natural language processing",
+    "nlp"
+  ],
+  "computer vision": [
+    "computer vision",
+    "cv"
+  ],
+  "large language models": [
+    "large language models",
+    "large language model",
+    "llm",
+    "llms"
+  ],
+  "generative ai": [
+    "generative ai",
+    "genai",
+    "gen ai"
+  ],
+  "pytorch": [
+    "pytorch",
+    "torch"
+  ],
+  "tensorflow": [
+    "tensorflow",
+    "tensrflow"
+  ],
+  "scikit-learn": [
+    "scikit-learn",
+    "scikit learn",
+    "sklearn"
+  ],
+  "pandas": [
+    "pandas"
+  ],
+  "numpy": [
+    "numpy"
+  ],
+  "scipy": [
+    "scipy"
+  ],
+  "keras": [
+    "keras"
+  ],
+  "opencv": [
+    "opencv",
+    "cv2"
+  ],
+  "hugging face": [
+    "huggingface",
+    "hugging face"
+  ],
+  "transformers": [
+    "transformers"
+  ],
+  "langchain": [
+    "langchain",
+    "lang chain"
+  ],
+  "llamaindex": [
+    "llamaindex",
+    "llama index"
+  ],
+  "rag": [
+    "rag",
+    "retrieval augmented generation"
+  ],
+  "model fine-tuning": [
+    "fine-tuning",
+    "finetuning"
+  ],
+  "prompt engineering": [
+    "prompt engineering"
+  ],
+  "graphql": [
+    "graphql",
+    "graph ql"
+  ],
+  "grpc": [
+    "grpc"
+  ],
+  "microservices": [
+    "microservices",
+    "microservice",
+    "microservice architecture"
+  ],
+  "distributed systems": [
+    "distributed systems"
+  ],
+  "system design": [
+    "system design"
+  ],
+  "unit testing": [
+    "unit testing",
+    "unit test"
+  ],
+  "pytest": [
+    "pytest"
+  ],
+  "jest": [
+    "jest"
+  ],
+  "junit": [
+    "junit"
+  ],
+  "tdd": [
+    "tdd",
+    "test driven development"
+  ],
+  "agile": [
+    "agile"
+  ],
+  "scrum": [
+    "scrum"
+  ],
+  "kanban": [
+    "kanban"
+  ],
+  "code review": [
+    "code review"
+  ]
+}
