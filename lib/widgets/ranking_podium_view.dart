@@ -1,4 +1,4 @@
-﻿import 'dart:async';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -121,7 +121,7 @@ class _RankingPodiumViewState extends State<RankingPodiumView>
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                '// EVALUATING DOSSIERS · COMPUTING COMPOSITE MATCH VECTORS',
+                'EVALUATING CANDIDATE DOSSIERS',
                 style: GoogleFonts.jetBrainsMono(
                   fontSize: 11,
                   fontWeight: FontWeight.w500,
@@ -181,7 +181,7 @@ class _RankingPodiumViewState extends State<RankingPodiumView>
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'NEXORA',
+                    'RECRUITR',
                     style: GoogleFonts.syne(
                       fontSize: 13,
                       fontWeight: FontWeight.w800,
@@ -191,7 +191,7 @@ class _RankingPodiumViewState extends State<RankingPodiumView>
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    '// CANDIDATE RANKING PODIUM',
+                    'CANDIDATE RANKING PODIUM',
                     style: GoogleFonts.jetBrainsMono(
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
@@ -312,7 +312,7 @@ class _RankingPodiumViewState extends State<RankingPodiumView>
                   Row(
                     children: [
                       Text(
-                        '// EXTENDED DOSSIER ROSTER',
+                        'EXTENDED CANDIDATE ROSTER',
                         style: GoogleFonts.jetBrainsMono(
                           fontSize: 11,
                           fontWeight: FontWeight.w700,
@@ -496,7 +496,9 @@ class _RankingPodiumViewState extends State<RankingPodiumView>
                     style: GoogleFonts.syne(
                       fontSize: 15,
                       fontWeight: FontWeight.w800,
-                      color: AppColors.textWhite,
+                      color: candidate.matchScore >= 80
+                          ? AppColors.limeScore
+                          : AppColors.textWhite,
                     ),
                   ),
                   const SizedBox(width: 16),
@@ -622,7 +624,9 @@ class _PodiumColumnState extends State<_PodiumColumn> {
                             style: GoogleFonts.syne(
                               fontSize: isDom ? 26 : 22,
                               fontWeight: FontWeight.w800,
-                              color: isDom ? AppColors.emerald : AppColors.textWhite,
+                              color: candidate.matchScore >= 80
+                                  ? AppColors.limeScore
+                                  : AppColors.textWhite,
                             ),
                           ),
                           Text(
@@ -630,7 +634,9 @@ class _PodiumColumnState extends State<_PodiumColumn> {
                             style: GoogleFonts.jetBrainsMono(
                               fontSize: 10,
                               fontWeight: FontWeight.w700,
-                              color: AppColors.textMuted,
+                              color: candidate.matchScore >= 80
+                                  ? AppColors.limeScore.withValues(alpha: 0.9)
+                                  : AppColors.textMuted,
                             ),
                           ),
                         ],

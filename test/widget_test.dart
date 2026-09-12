@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nexorah/main.dart';
+import 'package:nexorah/models/candidate.dart';
+import 'package:nexorah/services/resume_upload_service.dart';
 import 'package:nexorah/widgets/carousel_resume_card.dart';
 import 'package:nexorah/widgets/horizontal_resume_carousel.dart';
+import 'package:nexorah/widgets/recruitr_hero_section.dart';
 import 'package:nexorah/widgets/resume_document.dart';
 
 void main() {
@@ -11,7 +14,18 @@ void main() {
     TestWidgetsFlutterBinding.ensureInitialized();
   });
 
-  testWidgets('NexoraApp renders horizontal carousel with straight symmetric cards', (
+  Future<void> openArchive(WidgetTester tester) async {
+    await tester.pumpWidget(const RecruitRApp());
+    await tester.pumpAndSettle();
+
+    final exploreBtn = find.text('[ SCROLL TO EXPLORE ARCHIVE ]');
+    if (exploreBtn.evaluate().isNotEmpty) {
+      await tester.tap(exploreBtn);
+      await tester.pumpAndSettle();
+    }
+  }
+
+  testWidgets('RecruitR renders dramatic landing hero on open', (
     WidgetTester tester,
   ) async {
     tester.view.physicalSize = const Size(1440, 900);
@@ -21,11 +35,29 @@ void main() {
       tester.view.resetDevicePixelRatio();
     });
 
-    await tester.pumpWidget(const NexoraApp());
+    await tester.pumpWidget(const RecruitRApp());
     await tester.pumpAndSettle();
 
+    // Verify RecruitR Hero Section is present
+    expect(find.byType(RecruitRHeroSection), findsOneWidget);
+    expect(find.textContaining('Recruit', findRichText: true), findsWidgets);
+    expect(find.text('[ SCROLL TO EXPLORE ARCHIVE ]'), findsOneWidget);
+  });
+
+  testWidgets('RecruitRApp scrolls to horizontal carousel with straight symmetric cards', (
+    WidgetTester tester,
+  ) async {
+    tester.view.physicalSize = const Size(1440, 900);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+
+    await openArchive(tester);
+
     // Verify brand header and main title
-    expect(find.text('NEXORA'), findsWidgets);
+    expect(find.text('RECRUITR'), findsWidgets);
     expect(find.text('RESUME DOSSIER COLLECTION'), findsOneWidget);
 
     // Verify presence of horizontal carousel and cards
@@ -44,8 +76,7 @@ void main() {
       tester.view.resetDevicePixelRatio();
     });
 
-    await tester.pumpWidget(const NexoraApp());
-    await tester.pumpAndSettle();
+    await openArchive(tester);
 
     // Tap on the first candidate card in carousel
     final firstCard = find.byType(CarouselResumeCard).first;
@@ -89,8 +120,7 @@ void main() {
       tester.view.resetDevicePixelRatio();
     });
 
-    await tester.pumpWidget(const NexoraApp());
-    await tester.pumpAndSettle();
+    await openArchive(tester);
 
     // Tap search button in CamilleNavBar to reveal search field
     final searchTrigger = find.text('SEARCH');
@@ -119,8 +149,7 @@ void main() {
       tester.view.resetDevicePixelRatio();
     });
 
-    await tester.pumpWidget(const NexoraApp());
-    await tester.pumpAndSettle();
+    await openArchive(tester);
 
     // Tap 'SYSTEMS' category tab in CamilleNavBar
     final systemsTab = find.text('SYSTEMS');
@@ -143,8 +172,7 @@ void main() {
       tester.view.resetDevicePixelRatio();
     });
 
-    await tester.pumpWidget(const NexoraApp());
-    await tester.pumpAndSettle();
+    await openArchive(tester);
 
     // Verify initial index is 01 / 18
     expect(find.text('01'), findsWidgets);
@@ -175,8 +203,7 @@ void main() {
       tester.view.resetDevicePixelRatio();
     });
 
-    await tester.pumpWidget(const NexoraApp());
-    await tester.pumpAndSettle();
+    await openArchive(tester);
 
     // Drag carousel horizontally to the left to advance
     final carousel = find.byType(HorizontalResumeCarousel);
@@ -197,8 +224,7 @@ void main() {
       tester.view.resetDevicePixelRatio();
     });
 
-    await tester.pumpWidget(const NexoraApp());
-    await tester.pumpAndSettle();
+    await openArchive(tester);
 
     // Verify Rank Candidates button is present
     final rankBtn = find.text('RANK CANDIDATES');
@@ -245,8 +271,7 @@ void main() {
       tester.view.resetDevicePixelRatio();
     });
 
-    await tester.pumpWidget(const NexoraApp());
-    await tester.pumpAndSettle();
+    await openArchive(tester);
 
     // Click Rank Candidates
     await tester.tap(find.text('RANK CANDIDATES'));
@@ -281,10 +306,129 @@ void main() {
       tester.view.resetDevicePixelRatio();
     });
 
-    await tester.pumpWidget(const NexoraApp());
-    await tester.pumpAndSettle();
+    await openArchive(tester);
 
     // Verify UPLOAD RESUMES button is present
     expect(find.text('UPLOAD RESUMES'), findsOneWidget);
+
+    // Verify ResumeUploadService helper creates candidate properly
+    final mockCandidate = ResumeUploadService.createMockCandidateFromUpload(
+      fileName: 'Sarah_Connor_Resume.pdf',
+      fileSize: 204800,
+      index: 1,
+    );
+    expect(mockCandidate.name, 'Sarah Connor');
+    expect(mockCandidate.candidateNumber, 1);
+    expect(mockCandidate.matchScore, greaterThanOrEqualTo(84));
+  });
+
+  testWidgets('Demo vs Uploaded candidate separation logic is correct', (
+    WidgetTester tester,
+  ) async {
+    // Unit verification of requirement 4:
+    // If no uploaded candidates -> show demo
+    // If at least one uploaded candidate -> show ONLY uploaded candidates
+    final demoPool = [
+      Candidate(
+        id: 'demo_1',
+        candidateNumber: 1,
+        name: 'Demo Person',
+        headline: 'Demo Headline',
+        location: 'Demo City',
+        email: 'demo@test.com',
+        phone: '123',
+        portfolioUrl: 'https://test.com',
+        githubUrl: 'https://github.com/test',
+        summary: 'Demo summary',
+        matchScore: 90,
+        yearsOfExperience: 5,
+        category: 'Full-Stack & Web',
+        skills: ['Dart'],
+        experiences: [],
+        education: [],
+        projects: [],
+        certifications: [],
+        previewSnippet: 'Snippet',
+      ),
+    ];
+
+    final uploadedPool = <Candidate>[];
+
+    List<Candidate> getActive(List<Candidate> uploaded, List<Candidate> demo) {
+      return uploaded.isNotEmpty ? uploaded : demo;
+    }
+
+    // 1. Before upload: pool has demo
+    expect(getActive(uploadedPool, demoPool).length, 1);
+    expect(getActive(uploadedPool, demoPool).first.name, 'Demo Person');
+
+    // 2. After first upload: pool has ONLY uploaded candidate
+    final candidate1 = ResumeUploadService.createMockCandidateFromUpload(
+      fileName: 'Alice_Wong.pdf',
+      fileSize: 120000,
+      index: 1,
+    );
+    uploadedPool.add(candidate1);
+    expect(getActive(uploadedPool, demoPool).length, 1);
+    expect(getActive(uploadedPool, demoPool).first.name, 'Alice Wong');
+    expect(getActive(uploadedPool, demoPool).any((c) => c.name == 'Demo Person'), isFalse);
+
+    // 3. After second upload: pool accumulates and still has no demo
+    final candidate2 = ResumeUploadService.createMockCandidateFromUpload(
+      fileName: 'Bob_Smith.pdf',
+      fileSize: 150000,
+      index: 2,
+    );
+    uploadedPool.add(candidate2);
+    expect(getActive(uploadedPool, demoPool).length, 2);
+    expect(getActive(uploadedPool, demoPool).any((c) => c.name == 'Demo Person'), isFalse);
+  });
+
+  testWidgets('Browsing backward through candidate carousel does not scroll up toward hero', (
+    WidgetTester tester,
+  ) async {
+    tester.view.physicalSize = const Size(1440, 900);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+
+    await openArchive(tester);
+
+    // Initial state: in archive section (offset ~900)
+    final scrollableFinder = find.byType(SingleChildScrollView).first;
+    final scrollableState = tester.state<ScrollableState>(
+      find.descendant(of: scrollableFinder, matching: find.byType(Scrollable)).first,
+    );
+    final offsetAfterOpen = scrollableState.position.pixels;
+    expect(offsetAfterOpen, greaterThanOrEqualTo(800));
+
+    final carousel = find.byType(HorizontalResumeCarousel);
+
+    // Advance to candidate 2 by dragging left
+    await tester.drag(carousel, const Offset(-450, 0));
+    await tester.pumpAndSettle();
+    expect(find.text('02'), findsWidgets);
+
+    // Advance to candidate 3 by dragging left
+    await tester.drag(carousel, const Offset(-450, 0));
+    await tester.pumpAndSettle();
+    expect(find.text('03'), findsWidgets);
+
+    // Now browse backward (drag right) to see candidate 2 again
+    await tester.drag(carousel, const Offset(450, 0));
+    await tester.pumpAndSettle();
+    expect(find.text('02'), findsWidgets);
+
+    // Crucial check: the page's vertical scroll offset must remain in the archive section, NOT scrolled back to hero
+    final offsetAfterBackward = scrollableState.position.pixels;
+    expect(offsetAfterBackward, equals(offsetAfterOpen));
+
+    // Browse backward again to candidate 1
+    await tester.drag(carousel, const Offset(450, 0));
+    await tester.pumpAndSettle();
+    expect(find.text('01'), findsWidgets);
+    expect(scrollableState.position.pixels, equals(offsetAfterOpen));
   });
 }

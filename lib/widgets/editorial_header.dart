@@ -68,7 +68,7 @@ class EditorialHeader extends StatelessWidget {
                   ),
                   const SizedBox(width: 12),
                   Text(
-                    'NEXORA',
+                    'RECRUITR',
                     style: GoogleFonts.syne(
                       fontSize: 16,
                       fontWeight: FontWeight.w800,

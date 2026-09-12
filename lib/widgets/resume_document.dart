@@ -301,7 +301,7 @@ class ResumeDocument extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'NEXORA VERIFIED ARCHIVE RECORD · HACKATHON EDITION',
+                    'RECRUITR CANDIDATE DOSSIER',
                     style: GoogleFonts.jetBrainsMono(
                       fontSize: 9.5,
                       fontWeight: FontWeight.w600,

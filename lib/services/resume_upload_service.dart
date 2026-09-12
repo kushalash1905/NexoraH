@@ -148,9 +148,11 @@ class ResumeUploadService {
 
   /// Opens the native multi-file PDF picker on Flutter Web / Desktop
   /// and returns freshly created mock Candidate objects for the carousel.
+  /// Automatically filters out duplicates against [existingNames] or duplicate files.
   static Future<List<Candidate>> pickAndCreateCandidates({
     required int currentTotalCount,
     String defaultCategory = 'Full-Stack & Web',
+    Set<String>? existingNames,
   }) async {
     try {
       final files = await FilePicker.pickFiles(
@@ -163,12 +165,25 @@ class ResumeUploadService {
       }
 
       final List<Candidate> newCandidates = [];
+      final Set<String> seenInBatch = <String>{};
+
       for (int i = 0; i < files.length; i++) {
         final file = files[i];
+        final cleanName = cleanCandidateName(file.name);
+        final lowerName = cleanName.toLowerCase();
+
+        // Prevent duplicate candidates within this batch or already uploaded
+        if (seenInBatch.contains(lowerName)) continue;
+        if (existingNames != null && existingNames.contains(lowerName)) continue;
+
+        seenInBatch.add(lowerName);
+
+        final fileSize = file.lengthSync() ?? 102400;
+
         final candidate = createMockCandidateFromUpload(
           fileName: file.name,
-          fileSize: file.lengthSync() ?? 102400,
-          index: currentTotalCount + i + 1,
+          fileSize: fileSize,
+          index: currentTotalCount + newCandidates.length + 1,
           defaultCategory: defaultCategory,
         );
         newCandidates.add(candidate);

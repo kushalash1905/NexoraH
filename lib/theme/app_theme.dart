@@ -32,21 +32,30 @@ class AppColors {
   static const Color paperSurface = Color(0xFFF3F1EA);
   static const Color paperBorder = Color(0xFFE4E0D5);
   static const Color inkPrimary = Color(0xFF111111);
-  static const Color inkSecondary = Color(0xFF484C5A);
-  static const Color inkMuted = Color(0xFF767B8E);
+  static const Color inkSecondary = Color(0xFF333744);
+  static const Color inkMuted = Color(0xFF5A6072);
   static const Color inkDivider = Color(0xFFDDD9CD);
 
-  // Camille Mormal Typography Colors
+  // Camille Mormal Typography Colors (Enhanced Legibility & Subtle Contrast Polish)
   static const Color textWhite = Color(0xFFFFFFFF);
   static const Color textPrimary = Color(0xFFFFFFFF);
-  static const Color textSecondary = Color(0xB3FFFFFF); // 70% white
-  static const Color textMuted = Color(0xFF666667); // Exact Camille Mormal secondary
-  static const Color textDim = Color(0x59FFFFFF); // 35% white
-  static const Color textFaint = Color(0x24FFFFFF); // 14% white
+  static const Color textSecondary = Color(0xD9FFFFFF); // 85% white
+  static const Color textMuted = Color(0xFFB4B7C4); // Refined high-legibility slate gray (6.5:1 contrast)
+  static const Color textDim = Color(0x99FFFFFF); // 60% white for crisp metadata
+  static const Color textFaint = Color(0x4DFFFFFF); // 30% white
 
-  // Accents
-  static const Color emerald = Color(0xFF00F0A0); // Technical emerald
-  static const Color emeraldFaint = Color(0x1A00F0A0);
+  // Performance Metric — Vibrant, tasteful, energetic lime green exclusively for positive scores
+  static const Color limeScore = Color(0xFF96E032);
+  static const Color limeScoreMuted = Color(0x3396E032);
+
+  // Brand & UI Accents — Cozy, sophisticated editorial pastel pink
+  static const Color pastelPink = Color(0xFFF0A8BA);
+  static const Color pastelPinkFaint = Color(0x26F0A8BA);
+  static const Color pastelPinkBorder = Color(0x66F0A8BA);
+
+  // Map emerald aliases to cozy pastel pink for all decorative and UI elements
+  static const Color emerald = pastelPink;
+  static const Color emeraldFaint = pastelPinkFaint;
   static const Color cyanAccent = Color(0xFF38BDF8);
 }
 
@@ -58,7 +67,7 @@ class AppTheme {
       scaffoldBackgroundColor: AppColors.canvas,
       colorScheme: const ColorScheme.dark(
         surface: AppColors.plate,
-        primary: AppColors.emerald,
+        primary: AppColors.pastelPink,
         secondary: AppColors.textWhite,
         onSurface: AppColors.textWhite,
         outline: AppColors.hairline,
@@ -106,7 +115,7 @@ class AppTheme {
         bodyLarge: GoogleFonts.spaceGrotesk(
           fontSize: 15,
           fontWeight: FontWeight.w400,
-          color: AppColors.textWhite.withValues(alpha: 0.7),
+          color: AppColors.textWhite.withValues(alpha: 0.85),
         ),
         bodyMedium: GoogleFonts.spaceGrotesk(
           fontSize: 13,

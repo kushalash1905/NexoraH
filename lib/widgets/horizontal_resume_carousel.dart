@@ -87,8 +87,11 @@ class _HorizontalResumeCarouselState extends State<HorizontalResumeCarousel> {
   }
 
   void _goToPrevious() {
-    if (_currentPage > 0) {
-      _pageController.previousPage(
+    if (!_pageController.hasClients) return;
+    final current = _pageController.page?.round() ?? _currentPage;
+    if (current > 0) {
+      _pageController.animateToPage(
+        current - 1,
         duration: const Duration(milliseconds: 320),
         curve: Curves.easeOutCubic,
       );
@@ -96,8 +99,11 @@ class _HorizontalResumeCarouselState extends State<HorizontalResumeCarousel> {
   }
 
   void _goToNext() {
-    if (_currentPage < widget.candidates.length - 1) {
-      _pageController.nextPage(
+    if (!_pageController.hasClients) return;
+    final current = _pageController.page?.round() ?? _currentPage;
+    if (current < widget.candidates.length - 1) {
+      _pageController.animateToPage(
+        current + 1,
         duration: const Duration(milliseconds: 320),
         curve: Curves.easeOutCubic,
       );
@@ -105,25 +111,34 @@ class _HorizontalResumeCarouselState extends State<HorizontalResumeCarousel> {
   }
 
   void _onPointerScroll(PointerScrollEvent event) {
-    if (!_pageController.hasClients) return;
+    // Register and resolve pointer signal to strictly isolate horizontal carousel
+    // browsing and prevent ancestor vertical scroll from moving back toward the hero.
+    GestureBinding.instance.pointerSignalResolver.register(event, (PointerSignalEvent resolvedEvent) {
+      if (resolvedEvent is! PointerScrollEvent) return;
+      if (!_pageController.hasClients) return;
 
-    final now = DateTime.now();
-    if (now.difference(_lastScrollTime).inMilliseconds < 350) {
-      return;
-    }
-
-    final delta = event.scrollDelta.dx != 0
-        ? event.scrollDelta.dx
-        : event.scrollDelta.dy;
-
-    if (delta.abs() > 15) {
-      _lastScrollTime = now;
-      if (delta > 0) {
-        _goToNext();
-      } else {
-        _goToPrevious();
+      final now = DateTime.now();
+      if (now.difference(_lastScrollTime).inMilliseconds < 160) {
+        return;
       }
-    }
+
+      // Prioritize horizontal delta (trackpad swipe / tilt wheel), fall back to vertical (mouse wheel)
+      final double delta;
+      if (resolvedEvent.scrollDelta.dx.abs() > 0.5) {
+        delta = resolvedEvent.scrollDelta.dx;
+      } else {
+        delta = resolvedEvent.scrollDelta.dy;
+      }
+
+      if (delta.abs() > 6) {
+        _lastScrollTime = now;
+        if (delta > 0) {
+          _goToNext();
+        } else {
+          _goToPrevious();
+        }
+      }
+    });
   }
 
   double _getCardWidth(double screenWidth) {
@@ -179,16 +194,17 @@ class _HorizontalResumeCarouselState extends State<HorizontalResumeCarousel> {
         }
         return KeyEventResult.ignored;
       },
-      child: Column(
-        children: [
-          // The Horizontal Snapping Carousel
-          Expanded(
-            child: Listener(
-              onPointerSignal: (pointerSignal) {
-                if (pointerSignal is PointerScrollEvent) {
-                  _onPointerScroll(pointerSignal);
-                }
-              },
+      child: Listener(
+        behavior: HitTestBehavior.opaque,
+        onPointerSignal: (pointerSignal) {
+          if (pointerSignal is PointerScrollEvent) {
+            _onPointerScroll(pointerSignal);
+          }
+        },
+        child: Column(
+          children: [
+            // The Horizontal Snapping Carousel
+            Expanded(
               child: Stack(
                 alignment: Alignment.center,
                 children: [
@@ -288,7 +304,6 @@ class _HorizontalResumeCarouselState extends State<HorizontalResumeCarousel> {
                 ],
               ),
             ),
-          ),
 
           const SizedBox(height: 16),
 
@@ -370,7 +385,8 @@ class _HorizontalResumeCarouselState extends State<HorizontalResumeCarousel> {
           ),
         ],
       ),
-    );
+    ),
+  );
   }
 }
 

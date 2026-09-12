@@ -162,8 +162,8 @@ class _CarouselResumeCardState extends State<CarouselResumeCard> {
                                 fontSize: 22,
                                 fontWeight: FontWeight.w800,
                                 letterSpacing: -0.5,
-                                color: candidate.matchScore >= 90
-                                    ? AppColors.emerald
+                                color: candidate.matchScore >= 80
+                                    ? AppColors.limeScore
                                     : AppColors.textWhite,
                               ),
                             ),
@@ -173,7 +173,9 @@ class _CarouselResumeCardState extends State<CarouselResumeCard> {
                               style: GoogleFonts.jetBrainsMono(
                                 fontSize: 10,
                                 fontWeight: FontWeight.w700,
-                                color: AppColors.textMuted,
+                                color: candidate.matchScore >= 80
+                                    ? AppColors.limeScore.withValues(alpha: 0.9)
+                                    : AppColors.textMuted,
                               ),
                             ),
                           ],
@@ -250,7 +252,7 @@ class _CarouselResumeCardState extends State<CarouselResumeCard> {
                                   fontSize: 9.5,
                                   fontWeight: FontWeight.w600,
                                   letterSpacing: 0.6,
-                                  color: AppColors.textWhite.withValues(alpha: 0.8),
+                                  color: AppColors.textWhite.withValues(alpha: 0.88),
                                 ),
                               ),
                             ),

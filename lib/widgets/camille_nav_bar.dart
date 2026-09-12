@@ -12,6 +12,7 @@ class CamilleNavBar extends StatefulWidget {
   final String searchQuery;
   final ValueChanged<String> onSearchChanged;
   final List<String> categories;
+  final VoidCallback? onBrandmarkTap;
 
   const CamilleNavBar({
     super.key,
@@ -24,6 +25,7 @@ class CamilleNavBar extends StatefulWidget {
     required this.searchQuery,
     required this.onSearchChanged,
     required this.categories,
+    this.onBrandmarkTap,
   });
 
   @override
@@ -81,30 +83,38 @@ class _CamilleNavBarState extends State<CamilleNavBar> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Left: Brandmark in Camille Mormal typography
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'NEXORA',
-                    style: GoogleFonts.syne(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 2.5,
-                      color: AppColors.textWhite,
-                    ),
+              // Left: Brandmark in Camille Mormal typography (tap to return to hero)
+              MouseRegion(
+                cursor: widget.onBrandmarkTap != null
+                    ? SystemMouseCursors.click
+                    : SystemMouseCursors.basic,
+                child: GestureDetector(
+                  onTap: widget.onBrandmarkTap,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'RECRUITR',
+                        style: GoogleFonts.syne(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 2.5,
+                          color: AppColors.textWhite,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        '// ARCHIVE',
+                        style: GoogleFonts.jetBrainsMono(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: 1.2,
+                          color: AppColors.emerald,
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 8),
-                  Text(
-                    '// ARCHIVE',
-                    style: GoogleFonts.jetBrainsMono(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w500,
-                      letterSpacing: 1.2,
-                      color: AppColors.textMuted,
-                    ),
-                  ),
-                ],
+                ),
               ),
 
               // Center: Unboxed Minimalist Category Links (hidden on compact screens)
