@@ -12,8 +12,8 @@ from datetime import datetime
 from typing import Optional
 
 # Reference current date for resolving "Present" / "Current"
-CURRENT_YEAR = 2026
-CURRENT_MONTH = 9
+CURRENT_YEAR = datetime.now().year
+CURRENT_MONTH = datetime.now().month
 
 MONTH_NAMES: dict[str, int] = {
     "jan": 1, "january": 1,
@@ -31,10 +31,10 @@ MONTH_NAMES: dict[str, int] = {
 }
 
 # Regex components
-MONTHS_REGEX = r"(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:tember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)"
+MONTHS_REGEX = r"(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:t(?:ember)?)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)"
 YEAR_REGEX = r"(?:19|20)\d{2}"
 PRESENT_REGEX = r"(?:present|current|now|ongoing|today|till\s+date)"
-SEPARATOR_REGEX = r"(?:\s*[-–—/to]+\s*|\s+to\s+)"
+SEPARATOR_REGEX = r"(?:\s*[-–—]\s*|\s+to\s+)"
 
 # Pattern for Month Year - Month Year / Present
 RANGE_MONTH_YEAR = re.compile(
@@ -71,7 +71,7 @@ def _parse_month(month_str: Optional[str]) -> int:
     return MONTH_NAMES.get(m_clean, 1)
 
 
-def extract_date_range(text: str) -> Optional[dict]:
+def _extract_date_range(text: str) -> Optional[dict]:
     """Extract and normalize a start/end date range and duration from text.
     
     Returns:
@@ -203,3 +203,20 @@ def calculate_total_experience_months(date_ranges: list[dict]) -> int:
             
     total_months = sum(end - start for start, end in merged)
     return total_months
+
+
+def extract_date_range(text: str) -> Optional[dict]:
+    """Reject reversed ranges; expose uncertainty for year-only dates."""
+    result = _extract_date_range(text)
+    if result is None:
+        iso = re.search(r"\b((?:19|20)\d{2})-(0[1-9]|1[0-2])\s+(?:to|[-–—])\s+((?:19|20)\d{2})-(0[1-9]|1[0-2])\b", text)
+        if iso:
+            sy,sm,ey,em=map(int,iso.groups())
+            result=dict(start_raw=iso.group(1)+'-'+iso.group(2),end_raw=iso.group(3)+'-'+iso.group(4),start_iso=f'{sy:04d}-{sm:02d}',end_iso=f'{ey:04d}-{em:02d}',duration_months=max(1,(ey-sy)*12+em-sm))
+    if result is None:return None
+    start=tuple(map(int,result['start_iso'].split('-')))
+    end=(CURRENT_YEAR,CURRENT_MONTH) if result['end_iso']=='Present' else tuple(map(int,result['end_iso'].split('-')))
+    if end < start:return None
+    result['precision']='year' if re.fullmatch(YEAR_REGEX,result['start_raw']) else 'month'
+    result['warnings']=['Months are unspecified; duration uses Jan-to-Dec assumptions.'] if result['precision']=='year' else []
+    return result

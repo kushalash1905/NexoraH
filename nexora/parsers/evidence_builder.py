@@ -137,18 +137,16 @@ def extract_and_normalize_skills(
     for word in set(words):
         if word in aliases_dict:
             continue
+        choices = {}
         for alias, canonical in aliases_dict.items():
-            if len(alias) >= 5 and abs(len(word) - len(alias)) <= 2:
+            if len(alias) >= 5 and abs(len(word)-len(alias)) <= 1:
                 sim = fuzz.ratio(word, alias)
-                if sim >= 88:
-                    matched_skills.add(canonical)
-                    norm_logs.append({
-                        "original": word,
-                        "canonical": canonical,
-                        "match_type": "typo_fuzzy_match",
-                        "confidence": round(sim / 100.0, 2)
-                    })
-                    break
+                choices[canonical] = max(choices.get(canonical,0),sim)
+        ordered = sorted(choices.items(), key=lambda item: -item[1])
+        if ordered and ordered[0][1] >= 90 and (len(ordered)==1 or ordered[0][1]-ordered[1][1] >= 5):
+            canonical, sim = ordered[0]
+            matched_skills.add(canonical)
+            norm_logs.append(dict(original=word,canonical=canonical,match_type="typo_fuzzy_match",confidence=round(sim/100,2)))
 
     return sorted(list(matched_skills)), norm_logs
 
@@ -197,9 +195,10 @@ def build_candidate_from_pdf(
                         page_start=page_start,
                         page_end=page_end
                     ))
+                all_norm_logs.append(dict(original=first_line, canonical=sec_type.value, match_type="section_header", confidence=conf, page=block["page"]))
                 current_sec_type = sec_type
                 current_header = first_line
-                current_blocks = [block]
+                current_blocks = []
 
                 remaining_lines = "\n".join(lines[1:]).strip()
                 if not remaining_lines:
@@ -211,6 +210,8 @@ def build_candidate_from_pdf(
         # Build evidence unit from block
         bullets = segment_text_into_bullets(text)
         date_info = extract_date_range(text)
+        if date_info:
+            all_norm_logs.append(dict(original=text, canonical=date_info["start_iso"]+" to "+date_info["end_iso"], match_type="date_range", warnings=date_info.get("warnings", []), page=block["page"]))
         if date_info and current_sec_type == SectionType.EXPERIENCE:
             experience_ranges.append(date_info)
 
@@ -254,7 +255,7 @@ def build_candidate_from_pdf(
         name=name,
         email=email,
         phone=phone,
-        raw_text=full_text,
+        raw_text="\n\n".join(b.get("raw_text", b["text"]) for b in blocks),
         sections=sections,
         evidence_units=evidence_units,
         extracted_skills=sorted(list(all_extracted_skills)),
@@ -271,7 +272,8 @@ def build_candidate_from_text(
     """Ingest raw resume text and produce a structured Candidate object."""
     from nexora.parsers.pdf_parser import assess_extraction_quality
 
-    cleaned = extract_pdf_text_str = raw_text.strip()
+    from nexora.parsers.pdf_parser import clean_text
+    cleaned = clean_text(raw_text)
     quality = assess_extraction_quality(cleaned, num_pages=1, total_blocks=1, empty_blocks=0)
     aliases = load_skill_aliases()
 
@@ -285,8 +287,11 @@ def build_candidate_from_text(
     unit_counter = 1
 
     for sec in sections:
+        all_norm_logs.append(dict(original=sec.raw_header, canonical=sec.section_type.value, match_type="section_header", confidence=1.0))
         bullets = segment_text_into_bullets(sec.content)
         date_info = extract_date_range(sec.content)
+        if date_info:
+            all_norm_logs.append(dict(original=sec.content, canonical=date_info["start_iso"]+" to "+date_info["end_iso"], match_type="date_range", warnings=date_info.get("warnings", [])))
         if date_info and sec.section_type == SectionType.EXPERIENCE:
             experience_ranges.append(date_info)
 
@@ -318,7 +323,7 @@ def build_candidate_from_text(
         name=name,
         email=email,
         phone=phone,
-        raw_text=cleaned,
+        raw_text=raw_text,
         sections=sections,
         evidence_units=evidence_units,
         extracted_skills=sorted(list(all_extracted_skills)),

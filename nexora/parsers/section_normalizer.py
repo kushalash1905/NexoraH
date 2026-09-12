@@ -28,13 +28,13 @@ SECTION_PATTERNS: dict[SectionType, list[str]] = {
     SectionType.EDUCATION: [
         "education", "academic background", "educational background",
         "academic qualifications", "degrees", "university", "academics",
-        "education and training", "college", "schooling"
+        "education and training", "education & degrees", "college", "schooling"
     ],
     SectionType.SKILLS: [
         "skills", "technical skills", "core competencies", "technologies",
         "tools and technologies", "tools & technologies", "proficiencies",
         "areas of expertise", "key skills", "skill highlights", "technical proficiencies",
-        "programming skills", "competencies", "stack"
+        "programming skills", "competencies", "stack", "technical proficiency", "tech stack", "technology stack", "core competencies & stack"
     ],
     SectionType.PROJECTS: [
         "projects", "key projects", "personal projects", "academic projects",
@@ -64,7 +64,7 @@ SECTION_PATTERNS: dict[SectionType, list[str]] = {
         "qualifications", "who you are"
     ],
     SectionType.PREFERRED_QUALIFICATIONS: [
-        "preferred qualifications", "nice to haves", "desired qualifications",
+        "preferred qualifications", "preferred qualifications / nice to haves", "nice to haves", "desired qualifications",
         "bonus points", "preferred skills", "pluses", "good to have",
         "what gives you an edge", "bonus qualifications", "nice to have"
     ],
@@ -105,16 +105,6 @@ def is_likely_section_header(line: str) -> bool:
         if lower in patterns:
             return True
             
-    # Check if any strong section keyword is present as a discrete word token
-    tokens = set(re.findall(r"\b[a-z]+\b", lower))
-    key_terms = {
-        "experience", "education", "skills", "projects", "certifications",
-        "summary", "responsibilities", "qualifications", "awards", "publications",
-        "technologies", "competencies", "academics", "internships", "portfolio"
-    }
-    if tokens & key_terms:
-        return True
-
     # Fuzzy match with patterns
     for patterns in SECTION_PATTERNS.values():
         for pat in patterns:
@@ -139,20 +129,12 @@ def classify_section_header(header_text: str) -> tuple[SectionType, float]:
         if clean in patterns:
             return sec_type, 1.0
 
-    # 2. Multi-token and substring matching ordered by pattern length (most specific first)
+    # 2. Conservative fuzzy matching against complete headings
     all_patterns: list[tuple[SectionType, str]] = []
     for sec_type, patterns in SECTION_PATTERNS.items():
         for pat in patterns:
             all_patterns.append((sec_type, pat))
     all_patterns.sort(key=lambda x: len(x[1]), reverse=True)
-
-    tokens = set(re.findall(r"\b[a-z]+\b", clean))
-    for sec_type, pat in all_patterns:
-        pat_tokens = set(re.findall(r"\b[a-z]+\b", pat))
-        if pat_tokens and pat_tokens.issubset(tokens):
-            return sec_type, 0.95
-        if pat in clean:
-            return sec_type, 0.90
 
     # 3. Fuzzy matching via RapidFuzz
     best_type = SectionType.OTHER
@@ -163,7 +145,7 @@ def classify_section_header(header_text: str) -> tuple[SectionType, float]:
             best_score = sim
             best_type = sec_type
 
-    if best_score >= 0.75:
+    if best_score >= 0.85:
         return best_type, round(best_score, 2)
     return SectionType.OTHER, round(best_score, 2)
 

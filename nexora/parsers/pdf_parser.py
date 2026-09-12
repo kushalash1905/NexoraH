@@ -83,9 +83,6 @@ def _is_repeated_header_or_footer(
     if re.match(r"^(?:page\s+)?\d+(?:\s*(?:of|/)\s*\d+)?$", stripped):
         return True
 
-    # Short header lines in margin
-    if len(stripped.split()) <= 4:
-        return True
 
     return False
 
@@ -167,6 +164,16 @@ def extract_pdf_blocks(
     empty_blocks_count = 0
     full_text_pieces: list[str] = []
 
+    # Only remove short margin text when it truly repeats across pages.
+    repeated = {}
+    for index in range(total_pages):
+        pg = doc[index]
+        for block in pg.get_text("blocks"):
+            if len(block) > 6 and block[6] != 0: continue
+            mid = (block[1]+block[3])/2
+            text = clean_text(block[4])
+            if text and len(text.split()) <= 4 and (mid <= pg.rect.height*.15 or mid >= pg.rect.height*.85):
+                repeated.setdefault(text, set()).add(index)
     try:
         for page_idx in range(total_pages):
             page = doc[page_idx]
@@ -178,6 +185,7 @@ def extract_pdf_blocks(
             for b in blocks:
                 total_blocks_count += 1
                 b_bbox = (b[0], b[1], b[2], b[3])
+                if len(b) > 6 and b[6] != 0: continue
                 b_text = b[4]
                 
                 cleaned_block = clean_text(b_text)
@@ -186,13 +194,14 @@ def extract_pdf_blocks(
                     continue
 
                 # Filter out repeated headers/footers
-                if _is_repeated_header_or_footer(b_bbox, page_height, cleaned_block, page_num, total_pages):
+                if _is_repeated_header_or_footer(b_bbox, page_height, cleaned_block, page_num, total_pages) or (len(repeated.get(cleaned_block, set())) > 1 and (page_num > 1 or re.search(r"\b(confidential|resume|curriculum vitae|header)\b", cleaned_block, re.I))):
                     continue
 
                 extracted_blocks.append({
                     "page": page_num,
                     "bbox": b_bbox,
-                    "text": cleaned_block
+                    "text": cleaned_block,
+                    "raw_text": b_text
                 })
                 full_text_pieces.append(cleaned_block)
 

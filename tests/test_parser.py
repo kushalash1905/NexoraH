@@ -375,10 +375,10 @@ def test_detect_jd_bias():
     assert len(flags) >= 4
 
     bias_types = {f.bias_type for f in flags}
-    assert "gender_coded" in bias_types
-    assert "ageist" in bias_types
+    assert "vague_role_wording" in bias_types
+    assert "narrow_eligibility" in bias_types
     assert "elitist_credential" in bias_types
-    assert "unrealistic_tenure" in bias_types
+    assert "narrow_tenure" in bias_types
 
     # Ensure actionable suggestions are present
     for flag in flags:
