@@ -1,0 +1,59 @@
+{
+  "react": [
+    "react",
+    "reactjs",
+    "react.js",
+    "react js"
+  ],
+  "node.js": [
+    "node",
+    "nodejs",
+    "node.js",
+    "node js"
+  ],
+  "mongodb": [
+    "mongodb",
+    "mongo",
+    "mongo db"
+  ],
+  "rest api": [
+    "rest api",
+    "rest apis",
+    "restful api",
+    "restful services",
+    "rest services"
+  ],
+  "javascript": [
+    "javascript",
+    "js",
+    "ecmascript"
+  ],
+  "typescript": [
+    "typescript",
+    "ts"
+  ],
+  "postgresql": [
+    "postgresql",
+    "postgres",
+    "postgre sql"
+  ],
+  "express": [
+    "express",
+    "express.js",
+    "expressjs"
+  ],
+  "docker": [
+    "docker",
+    "dockerized",
+    "containerized"
+  ],
+  "aws": [
+    "aws",
+    "amazon web services"
+  ],
+  "python": [
+    "python",
+    "py",
+    "python3"
+  ]
+}

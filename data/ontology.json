@@ -1,0 +1,104 @@
+{
+  "node.js": {
+    "aliases": [
+      "node",
+      "nodejs",
+      "node.js",
+      "node js"
+    ],
+    "related": {
+      "express": 0.75,
+      "rest api": 0.55,
+      "javascript": 0.30
+    }
+  },
+  "react": {
+    "aliases": [
+      "react",
+      "reactjs",
+      "react.js",
+      "react js"
+    ],
+    "related": {
+      "frontend development": 0.70,
+      "javascript": 0.30
+    }
+  },
+  "mongodb": {
+    "aliases": [
+      "mongodb",
+      "mongo",
+      "mongo db"
+    ],
+    "related": {
+      "database development": 0.60
+    }
+  },
+  "express": {
+    "aliases": [
+      "express",
+      "express.js",
+      "expressjs"
+    ],
+    "related": {
+      "node.js": 0.75,
+      "rest api": 0.65,
+      "backend development": 0.70
+    }
+  },
+  "rest api": {
+    "aliases": [
+      "rest api",
+      "rest apis",
+      "restful api",
+      "restful services",
+      "rest services"
+    ],
+    "related": {
+      "backend development": 0.70
+    }
+  },
+  "docker": {
+    "aliases": [
+      "docker",
+      "dockerized",
+      "containerized"
+    ],
+    "related": {
+      "containerization": 0.80,
+      "devops": 0.60
+    }
+  },
+  "aws": {
+    "aliases": [
+      "aws",
+      "amazon web services"
+    ],
+    "related": {
+      "cloud computing": 0.80,
+      "devops": 0.60
+    }
+  },
+  "typescript": {
+    "aliases": [
+      "typescript",
+      "ts"
+    ],
+    "related": {
+      "javascript": 0.70,
+      "frontend development": 0.50
+    }
+  },
+  "postgresql": {
+    "aliases": [
+      "postgresql",
+      "postgres",
+      "postgre sql"
+    ],
+    "related": {
+      "sql": 0.80,
+      "relational database": 0.80,
+      "database development": 0.60
+    }
+  }
+}
