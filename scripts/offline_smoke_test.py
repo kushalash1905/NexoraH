@@ -25,10 +25,11 @@ print("=========================================")
 try:
     from nexora.config import LOCAL_MODEL_PATH, MODEL_PATH, MODEL_NAME
     from nexora.schemas import Candidate, EvidenceUnit, JobDescription, Requirement, JDBiasFlag
-    from nexora.parsers import parse_jd, parse_resume
+    from nexora.parsers.evidence_builder import build_candidate_from_pdf, build_candidate_from_text
+    from nexora.jd_analysis.requirement_classifier import build_job_description_from_pdf, build_job_description_from_text
     from nexora.matching.ontology import load_aliases, load_ontology
     from nexora.matching.semantic_engine import load_embedding_model
-    from nexora.matching.matcher import match_candidate_requirement
+    from nexora.matching.matcher import match_requirement
     from nexora.ranking.scoring import rank_candidates
     from nexora.explanations.generator import generate_top_three_explanations, build_final_result
     from nexora.explanations.comparison import compare_candidates, recruiter_answer

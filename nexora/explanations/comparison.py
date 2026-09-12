@@ -56,7 +56,18 @@ def compare_candidates(
     top_contributors = []
 
     for req_id, req_info in req_map.items():
-        importance = req_info.get("importance", 1.0)
+        raw_importance = req_info.get("importance", 1.0)
+        try:
+            importance = float(raw_importance)
+        except (ValueError, TypeError):
+            imp_str = str(raw_importance).lower()
+            if "preferred" in imp_str:
+                importance = 0.45
+            elif "contextual" in imp_str:
+                importance = 0.30
+            else:
+                importance = 1.0
+
         canonical = req_info.get("canonical", req_info.get("text", req_id))
 
         score_a = matches_a.get(req_id, 0.0)

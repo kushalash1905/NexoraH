@@ -173,8 +173,18 @@ def get_improvement_opportunities(candidate_score: Dict[str, Any], jd: Dict[str,
         req_id = match.get("requirement_id", "")
         req_info = req_map.get(req_id, {})
         canonical = req_info.get("canonical", req_info.get("text", req_id))
-        req_type = req_info.get("requirement_type", "required")
-        importance = req_info.get("importance", 1.0)
+        raw_importance = req_info.get("importance", 1.0)
+        try:
+            importance = float(raw_importance)
+        except (ValueError, TypeError):
+            imp_str = str(raw_importance).lower()
+            if "preferred" in imp_str:
+                importance = 0.45
+            elif "contextual" in imp_str:
+                importance = 0.30
+            else:
+                importance = 1.0
+
         f_score = match.get("final_requirement_score", 0.0)
 
         gap = 1.0 - f_score
@@ -213,13 +223,22 @@ def build_normalization_summary(candidates: List[Dict[str, Any]]) -> List[Dict[s
         cand_id = cand.get("candidate_id", "")
         name = cand.get("name", cand_id)
         ext_quality = cand.get("extraction_quality", 1.0)
+        if isinstance(ext_quality, dict):
+            ext_quality = ext_quality.get("quality_score", 1.0)
+        elif hasattr(ext_quality, "quality_score"):
+            ext_quality = getattr(ext_quality, "quality_score", 1.0)
+        try:
+            ext_quality_val = float(ext_quality)
+        except (TypeError, ValueError):
+            ext_quality_val = 1.0
+
         norm_log = cand.get("normalization_log", [])
         quality_flags = cand.get("quality_flags", ["text_extracted"])
 
         summary.append({
             "candidate_id": cand_id,
             "name": name,
-            "extraction_quality": round(ext_quality * 100.0, 1),
+            "extraction_quality": round(ext_quality_val * 100.0, 1),
             "normalizations": norm_log,
             "quality_flags": quality_flags
         })
