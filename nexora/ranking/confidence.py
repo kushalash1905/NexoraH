@@ -38,7 +38,7 @@ def calculate_candidate_confidence(
     Formula:
     C(c) = 0.45 * avg_evidence_strength
          + 0.30 * required_coverage
-         + 0.15 * extraction_quality
+         + 0.15 * 1.0 (neutral baseline; extraction quality is diagnostic only)
          + 0.10 * signal_agreement
          
     where signal_agreement = 1.0 - abs(keyword_alignment - semantic_alignment).
@@ -74,10 +74,11 @@ def calculate_candidate_confidence(
 
     signal_agreement = max(0.0, 1.0 - abs(avg_kw - avg_sem))
 
+    # Parsing quality is retained in candidate diagnostics, never used to penalize fit.
     raw_conf = (
         CONFIDENCE_EVIDENCE_WEIGHT * avg_ev_strength
         + CONFIDENCE_REQUIRED_COVERAGE_WEIGHT * required_coverage
-        + CONFIDENCE_EXTRACTION_QUALITY_WEIGHT * extraction_quality
+        + CONFIDENCE_EXTRACTION_QUALITY_WEIGHT * 1.0
         + CONFIDENCE_SIGNAL_AGREEMENT_WEIGHT * signal_agreement
     )
 
